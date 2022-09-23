@@ -1,17 +1,11 @@
-all: clean pass fail
-
-pass: 
-	iverilog -g2012 -s test -I${IVL_UVM_HOME}/ivl_uvm_std_ovl/ -f flist ivl_uvm_ovl_a_alw_pass.sv >& pass_comp.log
-	#iverilog -s test -I../../ivl_uvm_std_ovl/ ../../ivl_uvm_std_ovl/ivl_uvm_ovl_inc.v ivl_uvm_ovl_ex.sv |& tee comp.log
-	vvp a.out >& pass_run.log
-
-fail: 
-	iverilog -g2012 -s test -I${IVL_UVM_HOME}/ivl_uvm_std_ovl/ -f flist ivl_uvm_ovl_a_alw_fail.sv >& fail_comp.log
-	vvp a.out >& fail_run.log
-
-
+all:
+	make --no-print-directory -f OVL_ONE_COLD_Makefile
+	make --no-print-directory -f OVL_ONE_HOT_Makefile
+	
 clean:
-	rm -fr a.out *.log *.vcd tee
+	  rm -fr a.out *.log *.vcd tee
 
-
+help:
+	make --no-print-directory -f OVL_ONE_COLD_Makefile help
+	make --no-print-directory -f OVL_ONE_HOT_Makefile  help
 
