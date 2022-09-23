@@ -1,0 +1,15 @@
+
+all: clean pass fail
+
+pass: 
+	iverilog -g2012 -s test -I${IVL_UVM_HOME}/ivl_uvm_std_ovl/ -f flist ivl_uvm_ovl_one_hot_pass.sv >& hot_pass_comp.log
+	#iverilog -s test -I../../ivl_uvm_std_ovl/ ../../ivl_uvm_std_ovl/ivl_uvm_ovl_inc.v ivl_uvm_ovl_ex.sv |& tee comp.log
+	vvp a.out >& hot_pass_run.log
+
+fail: 
+	iverilog -g2012 -s test -I${IVL_UVM_HOME}/ivl_uvm_std_ovl/ -f flist ivl_uvm_ovl_one_hot_fail.sv >& hot_fail_comp.log
+	vvp a.out >& hot_fail_run.log
+
+
+clean:
+	rm -fr a.out *.log *.vcd tee
